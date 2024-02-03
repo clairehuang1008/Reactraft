@@ -5,6 +5,7 @@ import CodeRoundedIcon from '@mui/icons-material/CodeRounded';
 import { CodeBlock, monokai } from 'react-code-blocks';
 import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -16,7 +17,13 @@ import useOutsideClick from '../../../hooks/useOutsideClick';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode } from '@fortawesome/free-solid-svg-icons';
 
-export default function ButtonViewCode({ css, jsx, name, pageName }) {
+export default function ButtonViewCode({
+  css,
+  jsx,
+  name,
+  pageName,
+  isVertical,
+}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
@@ -34,11 +41,14 @@ export default function ButtonViewCode({ css, jsx, name, pageName }) {
 
   return (
     <Fragment>
-      <Tooltip title='View JSX Code for Components'>
-        <Fab size='small' variant='contained' onClick={openPopper}>
-          <FontAwesomeIcon icon={faCode} />
-        </Fab>
-      </Tooltip>
+      <Button
+        size='small'
+        onClick={openPopper}
+        sx={{ display: 'flex', flexDirection: 'column' }}
+      >
+        <FontAwesomeIcon icon={faCode} />
+        View Code
+      </Button>
       {anchorEl && (
         <CopyCodePopper
           anchorEl={anchorEl}
@@ -48,13 +58,21 @@ export default function ButtonViewCode({ css, jsx, name, pageName }) {
           onClose={closePopper}
           isTransitioning={isTransitioning}
           pageName={pageName}
+          isVertical={isVertical}
         />
       )}
     </Fragment>
   );
 }
 
-function GrowTransition({ jsx, css, name, isTransitioning, pageName }) {
+function GrowTransition({
+  jsx,
+  css,
+  name,
+  isTransitioning,
+  pageName,
+  isVertical,
+}) {
   const [value, setValue] = useState(pageName);
   useEffect(() => {
     if (name) setValue(name);
@@ -69,7 +87,10 @@ function GrowTransition({ jsx, css, name, isTransitioning, pageName }) {
         sx={{
           backgroundColor: '#5D5F58',
           borderRadius: '10px',
-          marginTop: '60px',
+          marginTop: isVertical ? '80px' : 0,
+          '& .MuiTabPanel-root': {
+            width: 'fit-content',
+          },
         }}
       >
         <TabContext value={value}>
@@ -127,6 +148,7 @@ function CopyCodePopper({
   onClose,
   isTransitioning,
   pageName,
+  isVertical,
 }) {
   const popperRef = useRef(null);
 
@@ -142,7 +164,7 @@ function CopyCodePopper({
         backgroundColor: '#ffffff4D',
       }}
       open={Boolean(anchorEl)}
-      placement='left'
+      placement={isVertical ? 'left' : 'bottom'}
       anchorEl={anchorEl}
     >
       <GrowTransition
@@ -151,6 +173,7 @@ function CopyCodePopper({
         name={name}
         isTransitioning={isTransitioning}
         pageName={pageName}
+        isVertical={isVertical}
       />
     </Popper>
   );

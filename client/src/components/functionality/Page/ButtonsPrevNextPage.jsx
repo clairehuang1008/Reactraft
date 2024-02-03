@@ -4,10 +4,11 @@ import {
   setSelectedIdx,
   setSelectedPageIdx,
 } from '../../../utils/reducers/appSlice';
-import Fab from '@mui/material/Fab';
-import Tooltip from '@mui/material/Tooltip';
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import Button from '@mui/material/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 export default function ButtonsPrevNextPage({ pageIdx }) {
   const pageLen = useSelector((state) => state.designV3.pages).length;
@@ -22,16 +23,14 @@ export default function ButtonsPrevNextPage({ pageIdx }) {
   };
   return (
     <Fragment>
-      <Tooltip title='Previous Page'>
-        <Fab size='small' onClick={() => previousPage(true)}>
-          <KeyboardArrowUpRoundedIcon />
-        </Fab>
-      </Tooltip>
-      <Tooltip title='Next Page' onClick={() => previousPage(false)}>
-        <Fab size='small'>
-          <KeyboardArrowDownRoundedIcon />
-        </Fab>
-      </Tooltip>
+      <Button onClick={() => previousPage(true)}>
+        <FontAwesomeIcon icon={faChevronUp} />
+        Prev Page
+      </Button>
+      <Button onClick={() => previousPage(false)}>
+        <FontAwesomeIcon icon={faChevronDown} />
+        Next Page
+      </Button>
     </Fragment>
   );
 }

@@ -102,11 +102,11 @@ export default function Workspace() {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            height: '50px',
+            height: '70px',
             paddingTop: 0,
           }}
         >
-          {windowWidth - 320 <= canvasWidth && <WorkspaceRight />}
+          {windowWidth - 420 <= canvasWidth && <WorkspaceRight />}
         </Grid>
         <Grid item xs sx={{ display: 'flex', justifyContent: 'center' }}>
           {image_url && (
@@ -121,7 +121,7 @@ export default function Workspace() {
         <Grid
           item
           xs='auto'
-          sx={{ display: windowWidth - 320 > canvasWidth ? 'block' : 'none' }}
+          sx={{ display: windowWidth - 420 > canvasWidth ? 'block' : 'none' }}
         >
           <WorkspaceRight canvasWidth={canvasWidth} />
         </Grid>

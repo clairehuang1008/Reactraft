@@ -5,12 +5,14 @@ import Tooltip from '@mui/material/Tooltip';
 import { useDispatch } from 'react-redux';
 import { updateDesignCoverOrTitleAndUpdateState } from '../../../utils/reducers/designSliceV3';
 import { setMessage } from '../../../utils/reducers/appSlice';
+import Button from '@mui/material/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImage } from '@fortawesome/free-solid-svg-icons';
 
 export default function ButtonSetPageAsDesignCover({ designId, imageUrl }) {
   const dispatch = useDispatch();
   return (
-    <Tooltip
-      title='Set Page as Design Cover'
+    <Button
       onClick={() => {
         try {
           dispatch(
@@ -26,9 +28,8 @@ export default function ButtonSetPageAsDesignCover({ designId, imageUrl }) {
         }
       }}
     >
-      <Fab size='small'>
-        <CenterFocusStrongIcon />
-      </Fab>
-    </Tooltip>
+      <FontAwesomeIcon icon={faImage} />
+      Set Cover
+    </Button>
   );
 }
